@@ -1,0 +1,38 @@
+{
+  "demo@mercado.com": {
+    "nombre": "Usuario Demo",
+    "email": "demo@mercado.com",
+    "password": "123456",
+    "fecha_registro": "2026-06-17T19:29:59.164799",
+    "is_merchant": true,
+    "store_name": "Tienda Demo",
+    "store_category": "alimentos",
+    "store_address": "Calle Principal 123",
+    "store_description": "Tienda de productos orgánicos",
+    "store_city": "Ciudad de México",
+    "rating": 4.8,
+    "is_verified": true
+  },
+  "max@gmail.com": {
+    "nombre": "Jose Maximiliano Rodriguez Lopez",
+    "email": "max@gmail.com",
+    "password": "MGODOFZ23#",
+    "fecha_registro": "2026-06-17T20:04:52.552432",
+    "is_merchant": true,
+    "store_name": "CREMERIA OLIMPUS",
+    "store_category": "alimentos",
+    "store_address": "Calle \"carmelia\" n4",
+    "rating": 4.5
+  },
+  "demo@tce.com": {
+    "nombre": "Usuario Demo",
+    "email": "demo@tce.com",
+    "password": "123456",
+    "fecha_registro": "2026-06-17T20:38:12.338392",
+    "is_merchant": true,
+    "store_name": "TCE Store",
+    "store_category": "Tecnología",
+    "store_address": "Digital Hub 404",
+    "rating": 4.9
+  }
+}

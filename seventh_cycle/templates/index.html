@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.C.E · TITANS OF THE CODING ELITE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================ */
+        /* PALETA DE COLORES                           */
+        /* ============================================ */        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: linear-gradient(135deg, #006A95, #58ADA0);
+            color: #F9E0AF;
+            min-height: 100vh;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+
+        /* Fondo con imagen */
+        .world-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{{ url_for('static', filename='images/fondo.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================ */
+        /* HEADER ESTILO PIXEL ART                      */
+        /* ============================================ */
+        
+        header {
+            background-color: rgba(0, 106, 149, 0.95);
+            border: 8px solid #FF5C00;
+            border-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    #FF1400,
+                    #FF1400 4px,
+                    #FF5C00 4px,
+                    #FF5C00 8px
+                ) 8;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 
+                10px 10px 0 rgba(0,0,0,0.3),
+                inset 0 0 0 4px #FF5C00;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FF1400, #FF5C00);
+            border: 4px solid #F9E0AF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #F9E0AF;
+            box-shadow: 0 4px 10px rgba(255, 20, 0, 0.3);
+        }
+
+        .company-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            font-weight: bold;
+            color: #F9E0AF;
+            text-shadow: 
+                2px 2px 0 #FF1400,
+                4px 4px 0 rgba(0,0,0,0.2);
+        }
+        .company-name span {
+            color: #58ADA0;
+            font-size: 12px;
+            text-shadow: 1px 1px 0 #006A95;
+        }
+
+        /* ============================================ */
+        /* NAVEGACIÓN ESTILO PIXEL ART                  */
+        /* ============================================ */
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background-color: #FF5C00;
+            color: #F9E0AF;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-bottom: 6px solid #FF1400;
+            border-right: 6px solid #FF1400;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            min-width: 100px;
+            transition: all 0.1s;
+            text-shadow: 2px 2px 0 #FF1400;
+        }
+
+        .nav-button:hover {
+            background-color: #FF8C00;
+            transform: translate(2px, 2px);
+            border-bottom-width: 4px;
+            border-right-width: 4px;
+        }
+
+        .nav-button:active {
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .nav-button.active {
+            background-color: #FF1400;
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        /* Botones especiales */
+        .logout-btn {
+            background-color: #FF1400;
+            border-bottom-color: #CC0000;
+            border-right-color: #CC0000;
+            text-shadow: 2px 2px 0 #CC0000;
+        }
+        .logout-btn:hover {
+            background-color: #FF3333;
+        }
+
+        .merchant-btn {
+            background-color: #58ADA0;
+            border-bottom-color: #006A95;
+            border-right-color: #006A95;
+            text-shadow: 2px 2px 0 #006A95;
+        }
+        .merchant-btn:hover {
+            background-color: #6BC0B3;
+        }
+
+        /* ============================================ */
+        /* TARJETA PRINCIPAL (CARD)                     */
+        /* ============================================ */
+        
+        .card {
+            background: rgba(249, 224, 175, 0.95);
+            width: 95%;
+            max-width: 750px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 25px rgba(0,0,0,0.25);
+            text-align: center;
+            animation: fadeIn 0.6s ease;
+            margin: 0 auto;
+            border: 6px solid #FF5C00;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================ */
+        /* LOGIN SCREEN                                 */
+        /* ============================================ */
+        
+        .login-screen.hidden { display: none; }
+        
+        .login-header {
+            margin-bottom: 32px;
+        }
+        .login-header h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 22px;
+            color: #006A95;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+        .login-header h1 i { color: #FF5C00; }
+        .login-header p {
+            color: #006A95;
+            font-size: 18px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+        }
+        .input-group label {
+            font-size: 18px;
+            color: #006A95;
+            font-weight: bold;
+        }
+        .input-group label i { color: #FF5C00; }
+        .input-group input {
+            padding: 14px 16px;
+            background: #FFFFFF;
+            border: 4px solid #58ADA0;
+            border-radius: 8px;
+            font-size: 18px;
+            font-family: 'VT323', monospace;
+            color: #006A95;
+            outline: none;
+            transition: 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #FF5C00;
+            box-shadow: 0 0 20px rgba(255, 92, 0, 0.2);
+        }
+
+        .login-btn {
+            background: #FF5C00;
+            color: #F9E0AF;
+            padding: 16px;
+            border: none;
+            border-bottom: 6px solid #FF1400;
+            border-right: 6px solid #FF1400;
+            border-radius: 12px;
+            font-size: 22px;
+            font-family: 'VT323', monospace;
+            cursor: pointer;
+            transition: 0.2s;
+            text-shadow: 2px 2px 0 #FF1400;
+        }
+        .login-btn:hover {
+            background: #FF8C00;
+            transform: translate(2px, 2px);
+            border-bottom-width: 4px;
+            border-right-width: 4px;
+        }
+        .login-btn:active {
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #006A95;
+            font-size: 16px;
+        }
+        .login-footer a {
+            color: #FF1400;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 3px solid #FF5C00;
+            padding-bottom: 2px;
+        }
+        .login-footer a:hover {
+            color: #FF5C00;
+        }
+
+        .error-message {
+            background: rgba(255, 20, 0, 0.1);
+            color: #FF1400;
+            padding: 12px 16px;
+            border: 3px solid #FF1400;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        /* ============================================ */
+        /* MARKET SCREEN                                */
+        /* ============================================ */
+        
+        .market-screen { display: none; }
+        .market-screen.active { display: block; }
+
+        .market-header {
+            margin-bottom: 24px;
+        }
+        .market-header .welcome {
+            font-size: 22px;
+            font-weight: 700;
+            color: #006A95;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .market-header .welcome i { color: #FF5C00; }
+        .market-header .sub {
+            color: #006A95;
+            font-size: 16px;
+            margin-top: 6px;
+        }
+        .market-header .sub i { color: #FF5C00; }
+
+        /* ============================================ */
+        /* BÚSQUEDA ESTILO PIXEL ART                    */
+        /* ============================================ */
+        
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 4px solid #58ADA0;
+            border-radius: 8px;
+            background: #FFFFFF;
+            font-size: 18px;
+            font-family: 'VT323', monospace;
+            color: #006A95;
+            outline: none;
+            min-width: 200px;
+            transition: 0.2s;
+        }
+        .search-bar input:focus {
+            border-color: #FF5C00;
+            box-shadow: 0 0 20px rgba(255, 92, 0, 0.2);
+        }
+        .search-bar button {
+            background: #FF5C00;
+            color: #F9E0AF;
+            border: none;
+            border-bottom: 6px solid #FF1400;
+            border-right: 6px solid #FF1400;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-family: 'VT323', monospace;
+            cursor: pointer;
+            transition: 0.2s;
+            text-shadow: 2px 2px 0 #FF1400;
+        }
+        .search-bar button:hover {
+            background: #FF8C00;
+            transform: translate(2px, 2px);
+            border-bottom-width: 4px;
+            border-right-width: 4px;
+        }
+        .search-bar button:active {
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        /* ============================================ */
+        /* BOTÓN EXPLORAR                               */
+        /* ============================================ */
+        
+        .explore-btn {
+            background: #FF5C00;
+            color: #F9E0AF;
+            border: none;
+            border-bottom: 6px solid #FF1400;
+            border-right: 6px solid #FF1400;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 20px;
+            font-family: 'VT323', monospace;
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-shadow: 2px 2px 0 #FF1400;
+        }
+        .explore-btn:hover {
+            background: #FF8C00;
+            transform: translate(2px, 2px);
+            border-bottom-width: 4px;
+            border-right-width: 4px;
+        }
+        .explore-btn:active {
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        /* ============================================ */
+        /* SECCIONES Y PRODUCTOS                        */
+        /* ============================================ */
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #006A95;
+            margin: 28px 0 14px 0;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+        }
+        .section-title a {
+            color: #FF5C00;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            border-bottom: 3px solid #FF5C00;
+            padding-bottom: 2px;
+        }
+        .section-title a:hover {
+            color: #FF1400;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .product-card {
+            background: #FFFFFF;
+            padding: 16px;
+            border: 4px solid #58ADA0;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.2s;
+            position: relative;
+            color: #006A95;
+        }
+        .product-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #FF5C00;
+            box-shadow: 0 10px 30px rgba(255, 92, 0, 0.2);
+        }
+        .product-card .product-image {
+            width: 100%;
+            height: 120px;
+            background: rgba(88, 173, 160, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin-bottom: 10px;
+            border: 3px solid #58ADA0;
+            border-radius: 8px;
+        }
+        .product-card h4 {
+            font-size: 18px;
+            color: #006A95;
+        }
+        .product-card .price {
+            font-size: 20px;
+            color: #FF1400;
+            font-weight: bold;
+        }
+        .product-card .store-name {
+            font-size: 14px;
+            color: #58ADA0;
+            margin-top: 4px;
+        }
+
+        /* Badge NUEVO estilo pixel */
+        .product-card .badge-new {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FF1400;
+            color: #F9E0AF;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 3px solid #FF5C00;
+            border-radius: 4px;
+            font-family: 'Press Start 2P', cursive;
+            animation: pulse-badge 1.5s ease-in-out infinite;
+            z-index: 10;
+            text-shadow: 1px 1px 0 #CC0000;
+        }
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ============================================ */
+        /* LISTA DE COMERCIOS                           */
+        /* ============================================ */
+        
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .card-item {
+            background: #FFFFFF;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            border: 4px solid #58ADA0;
+            border-radius: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: #006A95;
+            transition: 0.2s;
+        }
+        .card-item:hover {
+            border-color: #FF5C00;
+            box-shadow: 0 0 20px rgba(255, 92, 0, 0.1);
+            transform: translateX(5px);
+        }
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        .card-info h4 {
+            font-size: 18px;
+            color: #006A95;
+        }
+        .card-info .tag {
+            font-size: 15px;
+            color: #58ADA0;
+        }
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card-rating .stars {
+            background: rgba(255, 92, 0, 0.1);
+            padding: 4px 12px;
+            font-size: 16px;
+            border: 3px solid #FF5C00;
+            border-radius: 8px;
+            color: #006A95;
+        }
+        .card-rating .stars i {
+            color: #FF5C00;
+        }
+        .card-rating .btn-local {
+            background: #FF5C00;
+            color: #F9E0AF;
+            border: none;
+            border-bottom: 4px solid #FF1400;
+            border-right: 4px solid #FF1400;
+            border-radius: 8px;
+            padding: 6px 16px;
+            font-size: 15px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            transition: 0.1s;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: 1px 1px 0 #FF1400;
+        }
+        .card-rating .btn-local:hover {
+            background: #FF8C00;
+            transform: translate(2px, 2px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+        .card-rating .btn-local:active {
+            transform: translate(4px, 4px);
+            border-bottom-width: 1px;
+            border-right-width: 1px;
+        }
+
+        /* ============================================ */
+        /* VER TODOS                                    */
+        /* ============================================ */
+        
+        .ver-todos {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            color: #58ADA0;
+            font-size: 18px;
+            text-decoration: none;
+            border-top: 4px solid #58ADA0;
+            padding-top: 20px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+        .ver-todos:hover {
+            color: #006A95;
+            transform: scale(1.02);
+        }
+        .ver-todos i { color: #FF5C00; }
+
+        /* ============================================ */
+        /* FLASH MESSAGES                               */
+        /* ============================================ */
+        
+        .flash-message {
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 18px;
+            text-align: center;
+            border: 4px solid;
+            border-radius: 8px;
+        }
+        .flash-message.success {
+            background: rgba(88, 173, 160, 0.1);
+            color: #58ADA0;
+            border-color: #58ADA0;
+        }
+        .flash-message.error {
+            background: rgba(255, 20, 0, 0.1);
+            color: #FF1400;
+            border-color: #FF1400;
+        }
+
+        /* ============================================ */
+        /* MENSAJE DE BÚSQUEDA VACÍA                    */
+        /* ============================================ */
+        
+        .search-result-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #58ADA0;
+            font-size: 22px;
+            border: 4px dashed #58ADA0;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .search-result-message .icon {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .search-result-message strong { color: #FF1400; }
+
+        /* ============================================ */
+        /* FOOTER ESTILO PIXEL ART                      */
+        /* ============================================ */
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #F9E0AF;
+            margin-top: 40px;
+            font-size: 14px;
+            background: rgba(0, 106, 149, 0.9);
+            border: 4px solid #FF5C00;
+            border-radius: 10px;
+        }
+        footer p {
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE                                   */
+        /* ============================================ */
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            nav ul {
+                justify-content: center;
+            }
+            .company-name {
+                font-size: 16px;
+            }
+            .card {
+                padding: 20px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .login-header h1 {
+                font-size: 18px;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-button {
+                min-width: 80px;
+                font-size: 16px;
+                padding: 8px 15px;
+            }
+            .search-bar {
+                flex-direction: column;
+            }
+            .search-bar button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo con imagen -->
+    <div class="world-bg"></div>
+
+    <div class="container">
+        <!-- Header estilo pixel art -->
+        <header>
+            <div class="logo-container">
+                <div class="logo-img">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TCE Logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                </div>
+                <div class="company-name">T.C.E <span>· TITANS OF THE CODING ELITE</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/" class="nav-button active">Inicio</a></li>
+                    <li><a href="/about" class="nav-button">Sobre</a></li>
+                    <li><a href="/negocios" class="nav-button">Negocios</a></li>
+                    <li><a href="/contacto" class="nav-button">Contacto</a></li>
+                    {% if session.logged_in %}
+                        <li><a href="/logout" class="nav-button logout-btn">Salir</a></li>
+                        {% if session.is_merchant %}
+                            <li><a href="/merchant/dashboard" class="nav-button merchant-btn">Mi Tienda</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li><a href="/register" class="nav-button">Registro</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Tarjeta principal -->
+        <div class="card">
+            <!-- Login -->
+            <div class="login-screen {% if session.logged_in %}hidden{% endif %}" id="loginScreen">
+                <div class="login-header">
+                    <h1><i class="fas fa-code"></i> T.C.E Marketplace</h1>
+                    <p>Accede a tu cuenta de titán</p>
+                </div>
+                {% if error %}
+                <div class="error-message">{{ error }}</div>
+                {% endif %}
+                <form method="POST" action="/login" class="login-form">
+                    <div class="input-group">
+                        <label for="emailInput"><i class="fas fa-envelope"></i> Correo</label>
+                        <input type="email" id="emailInput" name="email" placeholder="titan@tce.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="passwordInput"><i class="fas fa-lock"></i> Contraseña</label>
+                        <input type="password" id="passwordInput" name="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="login-btn"><i class="fas fa-arrow-right-to-bracket"></i> Iniciar sesión</button>
+                </form>
+                <div class="login-footer">
+                    ¿No eres titán? <a href="/register">Regístrate</a>
+                </div>
+            </div>
+
+            <!-- Mercado -->
+            <div class="market-screen {% if session.logged_in %}active{% endif %}" id="marketScreen">
+                <div class="market-header">
+                    <div class="welcome">
+                        <span><i class="fas fa-code"></i> T.C.E Marketplace</span>
+                        <span style="font-size:16px;">
+                            <i class="fas fa-user"></i> {{ session.user_nombre }}
+                            {% if session.is_merchant %}
+                                <span style="background:#FF5C00;color:#F9E0AF;padding:2px 10px;font-size:12px;margin-left:8px;border-radius:4px;border:3px solid #FF1400;text-shadow:1px 1px 0 #FF1400;">Titán</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="sub">
+                        <i class="fas fa-bolt"></i> Descubre productos y comercios de la élite.
+                    </div>
+                    
+                    <form method="GET" action="/search" class="search-bar">
+                        <input type="text" name="q" placeholder="🔍 Buscar productos..." value="{{ search_query or '' }}">
+                        <button type="submit"><i class="fas fa-search"></i> Buscar</button>
+                    </form>
+                    
+                    <div class="explore-btn" id="exploreBtn">
+                        <i class="fas fa-compass"></i> Explorar Ahora
+                    </div>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                {% if search_results is defined and search_query is not none %}
+                    <!-- ============================================ -->
+                    <!-- MODO BÚSQUEDA - Mostrar resultados           -->
+                    <!-- ============================================ -->
+                    <div class="section-title">
+                        <span>🔍 Resultados para "{{ search_query }}"</span>
+                        <a href="/">Volver al inicio</a>
+                    </div>
+                    {% if search_results %}
+                        <div class="product-grid">
+                            {% for product in search_results %}
+                            <div class="product-card">
+                                <div class="product-image">{{ product.icon or '📦' }}</div>
+                                <h4>{{ product.name }}</h4>
+                                <div class="price">${{ "%.2f"|format(product.price) }}</div>
+                                <div class="store-name">🏪 {{ product.store_name }}</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="search-result-message">
+                            <span class="icon">🔍</span>
+                            No se encontraron productos para "<strong>{{ search_query }}</strong>"
+                            <p style="margin-top:10px;font-size:16px;color:#58ADA0;">Prueba con otras palabras clave</p>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- BOTÓN VISUALIZAR LOCALES -->
+                    <a href="/negocios" class="ver-todos">
+                        🏪 Visualizar Locales <i class="fas fa-arrow-right"></i>
+                    </a>
+
+                {% else %}
+                    <!-- ============================================ -->
+                    <!-- MODO NORMAL - Mostrar productos destacados    -->
+                    <!-- ============================================ -->
+                    
+                    <!-- ÚLTIMO PRODUCTO AGREGADO -->
+                    <div class="section-title">
+                        <span>🔥 Último producto agregado</span>
+                        <a href="#">Ver todos</a>
+                    </div>
+
+                    <div class="product-grid">
+                        {% if products %}
+                            {% for product in products %}
+                            <div class="product-card">
+                                {% if loop.first %}
+                                    <span class="badge-new">NUEVO</span>
+                                {% endif %}
+                                <div class="product-image">{{ product.icon or '📦' }}</div>
+                                <h4>{{ product.name }}</h4>
+                                <div class="price">${{ "%.2f"|format(product.price) }}</div>
+                                <div class="store-name">🏪 {{ product.store_name }}</div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p style="color:#58ADA0;font-size:20px;text-align:center;padding:30px 0;grid-column:1/-1;">
+                                No hay productos aún. ¡Sé el primero en publicar!
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <!-- COMERCIOS DESTACADOS -->
+                    <div class="section-title" style="margin-top:32px;">
+                        <span>🏪 Comercios Titánicos</span>
+                        <a href="/negocios">Ver todos</a>
+                    </div>
+
+                    <div class="card-list">
+                        {% if merchants %}
+                            {% for merchant in merchants %}
+                            <div class="card-item">
+                                <div class="card-info">
+                                    <h4>{{ merchant.store_name }}</h4>
+                                    <div class="tag"><i class="fas fa-tag"></i> {{ merchant.category or 'General' }}</div>
+                                </div>
+                                <div class="card-rating">
+                                    <span class="stars"><i class="fas fa-star"></i> {{ merchant.rating or '4.5' }}</span>
+                                    <a href="/negocios" class="btn-local">Ver Local</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p style="color:#58ADA0;font-size:18px;text-align:center;padding:20px 0;">
+                                No hay comercios registrados aún.
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <!-- BOTÓN VISUALIZAR LOCALES -->
+                    <a href="/negocios" class="ver-todos">
+                        🏪 Visualizar Locales <i class="fas fa-arrow-right"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Footer estilo pixel art -->
+        <footer>
+            <p>⚡ T.C.E · TITANS OF THE CODING ELITE ⚡</p>
+            <p style="font-size:14px;opacity:0.8;margin-top:5px;">Donde el código se convierte en leyenda</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            const exploreBtn = document.getElementById('exploreBtn');
+
+            if (exploreBtn) {
+                exploreBtn.addEventListener('click', function() {
+                    alert('⚡ Explorando productos y comercios de la élite');
+                });
+            }
+
+            document.querySelectorAll('.btn-local, .section-link').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        alert('🔍 Demo: Detalle del local o contenido.');
+                    }
+                });
+            });
+
+            // Efecto de botones estilo pixelado
+            document.querySelectorAll('.nav-button, .login-btn, .search-bar button, .explore-btn, .btn-local, .ver-todos').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.tagName === 'A' && this.getAttribute('href') && this.getAttribute('href') !== '#') {
+                        return;
+                    }
+                    
+                    this.style.transform = 'translate(4px, 4px)';
+                    this.style.borderBottomWidth = '2px';
+                    this.style.borderRightWidth = '2px';
+                    
+                    setTimeout(() => {
+                        if (this.matches(':hover')) {
+                            this.style.transform = 'translate(2px, 2px)';
+                            this.style.borderBottomWidth = '4px';
+                            this.style.borderRightWidth = '4px';
+                        } else {
+                            this.style.transform = '';
+                            this.style.borderBottomWidth = '';
+                            this.style.borderRightWidth = '';
+                        }
+                    }, 150);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

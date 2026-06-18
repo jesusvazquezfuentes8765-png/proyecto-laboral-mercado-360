@@ -1,0 +1,28 @@
+[
+  {
+    "id": "52903054",
+    "nombre": "CREMERIA OLIMPUS",
+    "categoria": "alimentos",
+    "direccion": "Calle \"carmelia\" n4",
+    "telefono": "",
+    "email": "max@gmail.com",
+    "descripcion": "Negocio registrado por Jose Maximiliano Rodriguez Lopez",
+    "rating": "4.5",
+    "fecha_registro": "2026-06-17T20:04:52.552530",
+    "creado_por": "max@gmail.com",
+    "dueño": "Jose Maximiliano Rodriguez Lopez"
+  },
+  {
+    "id": "dddaa392",
+    "nombre": "TCE Store",
+    "categoria": "Tecnología",
+    "direccion": "Digital Hub 404",
+    "telefono": "+52 55 4040 4040",
+    "email": "demo@tce.com",
+    "descripcion": "Tienda oficial de T.C.E - Productos exclusivos para la élite del código",
+    "rating": "4.9",
+    "fecha_registro": "2026-06-17T20:38:12.339658",
+    "creado_por": "demo@tce.com",
+    "dueño": "Usuario Demo"
+  }
+]

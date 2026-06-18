@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.C.E · TITANS OF THE CODING ELITE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================ */
+        /* PALETA DE COLORES                           */
+        /* ============================================ */      
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'VT323', monospace;
+            background: linear-gradient(135deg, #006A95, #58ADA0);
+            color: #F9E0AF;
+            min-height: 100vh;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+        .world-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("{{ url_for('static', filename='images/fondo.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            z-index: -1;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        /* ============================================ */
+        /* HEADER                  */
+        /* ============================================ */
+        
+        header {
+            background-color: rgba(139, 69, 19, 0.9);
+            border: 8px solid #654321;
+            border-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    #654321,
+                    #654321 4px,
+                    #8B4513 4px,
+                    #8B4513 8px
+                ) 8;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 
+                10px 10px 0 rgba(0,0,0,0.3),
+                inset 0 0 0 4px #A0522D;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #2d6a4f, #52b788);
+            border: 4px solid #1B5E20;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(45, 106, 79, 0.3);
+            overflow: hidden;
+        }
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .company-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            text-shadow: 
+                2px 2px 0 #1B5E20,
+                4px 4px 0 rgba(0,0,0,0.2);
+        }
+        .company-name span {
+            color: #81C784;
+            font-size: 12px;
+            text-shadow: 1px 1px 0 #1B5E20;
+        }
+
+        /* ============================================ */
+        /* NAVEGACIÓN IGUAL AL DE INDEX                */
+        /* ============================================ */
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background-color: #4CAF50;
+            color: white;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-bottom: 6px solid #2E7D32;
+            border-right: 6px solid #2E7D32;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            min-width: 100px;
+            transition: all 0.1s;
+            text-shadow: 2px 2px 0 #1B5E20;
+        }
+
+        .nav-button:hover {
+            background-color: #66BB6A;
+            transform: translate(2px, 2px);
+            border-bottom-width: 4px;
+            border-right-width: 4px;
+        }
+
+        .nav-button:active {
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .nav-button.active {
+            background-color: #2E7D32;
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .logout-btn {
+            background-color: #c62828;
+            border-bottom-color: #b71c1c;
+            border-right-color: #b71c1c;
+            text-shadow: 2px 2px 0 #b71c1c;
+        }
+        .logout-btn:hover {
+            background-color: #e53935;
+        }
+
+        .merchant-btn {
+            background-color: #00897B;
+            border-bottom-color: #00695C;
+            border-right-color: #00695C;
+            text-shadow: 2px 2px 0 #00695C;
+        }
+        .merchant-btn:hover {
+            background-color: #26A69A;
+        }
+
+        /* ============================================ */
+        /* RESTO DEL CONTENIDO CON PALETA DE COLORES    */
+        /* ============================================ */
+
+        .about-header {
+            background: rgba(249, 224, 175, 0.95);
+            border: 6px solid #FF5C00;
+            padding: 50px;
+            margin-bottom: 50px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 92, 0, 0.15);
+        }
+        .about-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 40px;
+            color: #006A95;
+            text-shadow: 0 0 30px rgba(0, 106, 149, 0.3);
+            margin-bottom: 25px;
+        }
+        .about-title span { color: #FF1400; }
+        .about-subtitle {
+            font-size: 24px;
+            color: #FF5C00;
+            margin-bottom: 20px;
+        }
+        .about-intro {
+            font-size: 20px;
+            color: #006A95;
+            max-width: 1000px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        .about-intro strong { color: #FF1400; }
+
+        .history-section {
+            background: rgba(249, 224, 175, 0.95);
+            border: 6px solid #58ADA0;
+            padding: 50px;
+            margin: 50px 0;
+            box-shadow: 0 0 30px rgba(88, 173, 160, 0.1);
+        }
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 28px;
+            color: #006A95;
+            text-shadow: 0 0 20px rgba(0, 106, 149, 0.2);
+            margin-bottom: 40px;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 4px solid #FF5C00;
+        }
+        .history-content { color: #006A95; font-size: 20px; line-height: 1.8; }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            gap: 20px;
+        }
+        .timeline-item {
+            background: rgba(0, 106, 149, 0.05);
+            border: 4px solid #58ADA0;
+            padding: 25px;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(88, 173, 160, 0.05);
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover {
+            background: rgba(0, 106, 149, 0.1);
+            border-color: #FF5C00;
+            box-shadow: 0 0 30px rgba(255, 92, 0, 0.15);
+            transform: scale(1.02);
+        }
+        .timeline-year {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            color: #FF1400;
+            margin-bottom: 15px;
+        }
+        .timeline-text { font-size: 18px; color: #006A95; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .team-member {
+            background: rgba(249, 224, 175, 0.95);
+            border: 4px solid #58ADA0;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(88, 173, 160, 0.05);
+        }
+        .team-member:hover {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: #FF5C00;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 92, 0, 0.2);
+        }
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            background: linear-gradient(135deg, #FF1400, #FF5C00);
+            border: 4px solid #F9E0AF;
+            box-shadow: 0 0 30px rgba(255, 20, 0, 0.2);
+        }
+        .member-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #006A95;
+            margin-bottom: 10px;
+        }
+        .member-role { font-size: 18px; color: #58ADA0; }
+        .member-role i { color: #FF5C00; margin-right: 8px; }
+
+        /* ============================================ */
+        /* CENTRAR EL CUADRO DE HÉCTOR                 */
+        /* ============================================ */
+        
+        .team-grid .team-member:last-child {
+            grid-column: 1 / -1;
+            justify-self: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        .mission-card, .vision-card {
+            background: rgba(249, 224, 175, 0.95);
+            border: 6px solid #58ADA0;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(88, 173, 160, 0.05);
+            transition: all 0.3s ease;
+        }
+        .mission-card:hover, .vision-card:hover {
+            border-color: #FF5C00;
+            box-shadow: 0 0 40px rgba(255, 92, 0, 0.15);
+            transform: scale(1.01);
+        }
+        .mission-icon, .vision-icon { font-size: 60px; margin-bottom: 25px; display: block; }
+        .mission-title, .vision-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            color: #006A95;
+            margin-bottom: 20px;
+        }
+        .mission-text, .vision-text { color: #006A95; font-size: 20px; line-height: 1.7; }
+
+        .values-section {
+            background: rgba(249, 224, 175, 0.95);
+            border: 6px solid #58ADA0;
+            padding: 50px;
+            margin: 60px 0;
+            box-shadow: 0 0 30px rgba(88, 173, 160, 0.05);
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .value-item {
+            background: rgba(0, 106, 149, 0.05);
+            padding: 30px;
+            text-align: center;
+            border: 4px solid #58ADA0;
+            transition: all 0.3s ease;
+        }
+        .value-item:hover {
+            background: rgba(0, 106, 149, 0.1);
+            border-color: #FF5C00;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 92, 0, 0.1);
+        }
+        .value-icon { font-size: 45px; margin-bottom: 18px; display: block; }
+        .value-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: #006A95;
+            margin-bottom: 12px;
+        }
+        .value-desc { font-size: 16px; color: #58ADA0; line-height: 1.6; }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .achievement-item {
+            background: rgba(249, 224, 175, 0.95);
+            padding: 30px;
+            text-align: center;
+            border: 4px solid #58ADA0;
+            transition: all 0.3s ease;
+        }
+        .achievement-item:hover {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: #FF5C00;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 92, 0, 0.1);
+        }
+        .achievement-number {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 32px;
+            color: #FF1400;
+            margin-bottom: 8px;
+        }
+        .achievement-text { font-size: 18px; color: #006A95; }
+
+        .btn-container {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding-top: 40px;
+            border-top: 4px dashed #FF5C00;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #FF1400, #FF5C00);
+            color: #F9E0AF;
+            padding: 20px 50px;
+            text-decoration: none;
+            font-size: 22px;
+            border: 4px solid #FF5C00;
+            font-family: 'VT323', monospace;
+            display: inline-block;
+            margin: 0 20px;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 40px rgba(255, 20, 0, 0.2);
+            text-shadow: 2px 2px 0 #CC0000;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #FF3333, #FF8C00);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 50px rgba(255, 20, 0, 0.4);
+        }
+
+        .social-section {
+            background: rgba(249, 224, 175, 0.95);
+            border: 6px solid #58ADA0;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(88, 173, 160, 0.05);
+        }
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .social-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .social-item:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 4px solid #58ADA0;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            color: #006A95;
+        }
+        .social-item:hover .social-icon {
+            box-shadow: 0 0 50px rgba(255, 92, 0, 0.3);
+            background: #F9E0AF;
+            border-color: #FF5C00;
+        }
+        .social-item .social-label {
+            font-size: 18px;
+            color: #006A95;
+            font-family: 'VT323', monospace;
+        }
+        .social-item:hover .social-label {
+            color: #FF1400;
+        }
+        .social-icon.youtube { border-color: #FF1400; color: #FF1400; }
+        .social-item:hover .social-icon.youtube { box-shadow: 0 0 50px rgba(255, 20, 0, 0.3); background: rgba(255, 20, 0, 0.1); }
+        .social-icon.x { border-color: #006A95; color: #006A95; }
+        .social-item:hover .social-icon.x { box-shadow: 0 0 50px rgba(0, 106, 149, 0.3); background: rgba(0, 106, 149, 0.05); }
+        .social-icon.facebook { border-color: #1877f2; color: #1877f2; }
+        .social-item:hover .social-icon.facebook { box-shadow: 0 0 50px rgba(24, 119, 242, 0.3); background: rgba(24, 119, 242, 0.1); }
+        .social-icon.instagram { border-color: #e4405f; color: #e4405f; }
+        .social-item:hover .social-icon.instagram { box-shadow: 0 0 50px rgba(228, 64, 95, 0.3); background: rgba(228, 64, 95, 0.1); }
+
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 4px solid #58ADA0;
+        }
+        .contact-info p {
+            font-size: 20px;
+            color: #006A95;
+        }
+        .contact-info a {
+            color: #FF1400;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .contact-info a:hover {
+            color: #FF5C00;
+            text-shadow: 0 0 20px rgba(255, 92, 0, 0.3);
+        }
+
+        footer {
+            background: rgba(0, 106, 149, 0.95);
+            border: 6px solid #FF5C00;
+            padding: 50px;
+            margin-top: 80px;
+            text-align: center;
+            color: #F9E0AF;
+            box-shadow: 0 0 30px rgba(255, 92, 0, 0.1);
+        }
+        .footer-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 22px;
+            color: #F9E0AF;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 92, 0, 0.3);
+        }
+        .footer-text { font-size: 20px; line-height: 1.6; }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 25px; padding: 20px; }
+            .company-name { font-size: 18px; }
+            .about-title { font-size: 28px; }
+            .timeline { flex-direction: column; }
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .team-grid .team-member:last-child {
+                grid-column: 1 / -1;
+                max-width: 100%;
+            }
+            .values-grid { grid-template-columns: repeat(2, 1fr); }
+            .mission-vision { grid-template-columns: 1fr; }
+            .nav-button { min-width: 100px; font-size: 18px; padding: 10px 20px; }
+            .btn-primary { padding: 18px 35px; font-size: 20px; display: block; width: 90%; margin: 15px auto; }
+            .social-grid { gap: 20px; }
+            .social-icon { width: 65px; height: 65px; font-size: 28px; }
+        }
+        @media (max-width: 480px) {
+            .about-title { font-size: 22px; }
+            .team-grid { grid-template-columns: 1fr; }
+            .team-grid .team-member:last-child {
+                grid-column: 1;
+            }
+            .values-grid { grid-template-columns: 1fr; }
+            .achievements-grid { grid-template-columns: 1fr 1fr; }
+            .social-icon { width: 55px; height: 55px; font-size: 22px; }
+            .social-grid { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="world-bg"></div>
+    <div class="container">
+        <!-- ============================================ -->
+        <!-- HEADER IDÉNTICO AL DE INDEX                  -->
+        <!-- ============================================ -->
+        <header>
+            <div class="logo-container">
+                <div class="logo-img">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TCE Logo">
+                </div>
+                <div class="company-name">T.C.E <span>· TITANS OF THE CODING ELITE</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/" class="nav-button">Inicio</a></li>
+                    <li><a href="/about" class="nav-button active">Sobre</a></li>
+                    <li><a href="/negocios" class="nav-button">Negocios</a></li>
+                    <li><a href="/contacto" class="nav-button">Contacto</a></li>
+                    {% if session.logged_in %}
+                        <li><a href="/logout" class="nav-button logout-btn">Salir</a></li>
+                        {% if session.is_merchant %}
+                            <li><a href="/merchant/dashboard" class="nav-button merchant-btn">Mi Tienda</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li><a href="/register" class="nav-button">Registro</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <!-- ============================================ -->
+        <!-- CONTENIDO PRINCIPAL                         -->
+        <!-- ============================================ -->
+        
+        <div class="about-header">
+            <h1 class="about-title">TITANS OF THE<br><span>CODING ELITE</span></h1>
+            <div class="about-subtitle">⚡ DONDE EL CÓDIGO SE CONVIERTE EN LEYENDA ⚡</div>
+            <p class="about-intro">
+                En <strong>T.C.E</strong> no solo escribimos código, <strong>creamos el futuro</strong>. 
+                Somos una hermandad de desarrolladores que fusionan tecnología de punta con una mentalidad 
+                de élite para revolucionar el mundo digital.
+            </p>
+        </div>
+
+        <div class="history-section">
+            <h2 class="section-title">📜 NUESTRO ORIGEN</h2>
+            <div class="history-content">
+                <p style="margin-bottom:20px;">
+                    T.C.E nació en <strong style="color:#FF1400;">2024</strong> con una visión clara: 
+                    <strong style="color:#FF1400;">formar a la próxima generación de titanes del código</strong>.
+                </p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-text">Fundación con 5 titanes</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-text">1,000+ developers</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2026</div>
+                        <div class="timeline-text">Lanzamiento T.C.E Marketplace</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <h2 class="section-title">👥 LOS TITANES</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">👨‍💻</div>
+                    <h3 class="member-name">Jose Maximiliano Rodríguez López</h3>
+                    <div class="member-role"><i class="fas fa-crown"></i> Administrador de Base de Datos</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👩‍💻</div>
+                    <h3 class="member-name">Leslie Lucero Ávila Martínez</h3>
+                    <div class="member-role"><i class="fas fa-database"></i> Administradora de Base de Datos</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">🧑‍💻</div>
+                    <h3 class="member-name">Sebastián Fuentes Domínguez</h3>
+                    <div class="member-role"><i class="fas fa-cogs"></i> Desarrollador Full Stack</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👨‍💻</div>
+                    <h3 class="member-name">Jesús Alberto Vásquez Fuentes</h3>
+                    <div class="member-role"><i class="fas fa-cloud"></i> Desarrollador Backend</div>
+                </div>
+                <!-- Cuadro de Héctor Geobani Hernández Deciga - Centrado -->
+                <div class="team-member">
+                    <div class="member-avatar">🧑‍💻</div>
+                    <h3 class="member-name">Héctor Geobani Hernández Deciga</h3>
+                    <div class="member-role"><i class="fas fa-paint-brush"></i> Desarrollador Frontend</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mission-vision">
+            <div class="mission-card">
+                <span class="mission-icon">🎯</span>
+                <h2 class="mission-title">MISIÓN</h2>
+                <div class="mission-text">
+                    Empoderar a la próxima generación de desarrolladores con herramientas, 
+                    conocimiento y una comunidad de élite que transforme el panorama tecnológico.
+                </div>
+            </div>
+            <div class="vision-card">
+                <span class="vision-icon">🚀</span>
+                <h2 class="vision-title">VISIÓN</h2>
+                <div class="vision-text">
+                    Ser el epicentro mundial de la innovación tecnológica, donde los titanes del código 
+                    forjan el futuro digital con pasión y excelencia.
+                </div>
+            </div>
+        </div>
+
+        <div class="values-section">
+            <h2 class="section-title">⭐ VALORES TITÁNICOS</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <span class="value-icon">⚡</span>
+                    <div class="value-title">Excelencia</div>
+                    <div class="value-desc">No hay código mediocre</div>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">🤝</span>
+                    <div class="value-title">Hermandad</div>
+                    <div class="value-desc">Juntos somos invencibles</div>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">💡</span>
+                    <div class="value-title">Innovación</div>
+                    <div class="value-desc">Rompiendo barreras</div>
+                </div>
+                <div class="value-item">
+                    <span class="value-icon">🔥</span>
+                    <div class="value-title">Pasión</div>
+                    <div class="value-desc">Código con alma</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="achievements">
+            <h2 class="section-title">🏆 LOGROS TITÁNICOS</h2>
+            <div class="achievements-grid">
+                <div class="achievement-item">
+                    <div class="achievement-number">5</div>
+                    <div class="achievement-text">Titanes Fundadores</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-number">1,000+</div>
+                    <div class="achievement-text">Developers Unidos</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-number">50+</div>
+                    <div class="achievement-text">Proyectos Titanes</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-number">4.9⭐</div>
+                    <div class="achievement-text">Calificación Élite</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE REDES SOCIALES -->
+        <div class="social-section">
+            <h2 class="section-title">🌐 SÍGUENOS EN REDES</h2>
+            <div class="social-grid">
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/channel/UCUuMsfJFCZiAnCaZVXyJKAA" target="_blank" class="social-item">
+                    <div class="social-icon youtube"><i class="fab fa-youtube"></i></div>
+                    <span class="social-label">YouTube</span>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="https://x.com/tc_elitepham" target="_blank" class="social-item">
+                    <div class="social-icon x"><i class="fa-brands fa-x-twitter"></i></div>
+                    <span class="social-label">X</span>
+                </a>
+                <!-- Facebook -->
+                <a href="https://facebook.com/profile.php?id=61590794528689" target="_blank" class="social-item">
+                    <div class="social-icon facebook"><i class="fab fa-facebook-f"></i></div>
+                    <span class="social-label">Facebook</span>
+                </a>
+                <!-- Instagram -->
+                <a href="https://instagram.com/titanscodeelite" target="_blank" class="social-item">
+                    <div class="social-icon instagram"><i class="fab fa-instagram"></i></div>
+                    <span class="social-label">Instagram</span>
+                </a>
+            </div>
+            <div class="contact-info">
+                <p>📧 Correo: <a href="mailto:titanscodeelite@gmail.com">titanscodeelite@gmail.com</a></p>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a href="/" class="btn-primary">🏠 INICIO</a>
+            <a href="/contacto" class="btn-primary">📞 CONTACTO</a>
+        </div>
+
+        <footer>
+            <div class="footer-title">T.C.E · TITANS OF THE CODING ELITE</div>
+            <div class="footer-text">⚡ Donde el código se convierte en leyenda ⚡</div>
+            <div style="margin-top:30px;padding-top:30px;border-top:4px solid #FF5C00;">
+                <p style="font-size:18px;">© 2026 T.C.E. Todos los derechos reservados.</p>
+                <p style="font-size:18px;margin-top:10px;color:#58ADA0;">
+                    📧 <a href="mailto:titanscodeelite@gmail.com" style="color:#F9E0AF;text-decoration:none;font-weight:bold;">titanscodeelite@gmail.com</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

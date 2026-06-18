@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.C.E · Contacto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================ */
+        /* PALETA DE COLORES                           */
+        /* ============================================ */
+        /* #FF1400 - Rojo intenso                      */
+        /* #FF5C00 - Naranja                          */
+        /* #F9E0AF - Crema/beige                      */
+        /* #58ADA0 - Verde azulado                    */
+        /* #006A95 - Azul profundo                    */
+        /* ============================================ */
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'VT323', monospace;
+            background: linear-gradient(135deg, #006A95, #58ADA0);
+            color: #F9E0AF;
+            min-height: 100vh;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+        .world-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("{{ url_for('static', filename='images/fondo.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        /* ============================================ */
+        /* HEADER IGUAL AL DE INDEX                    */
+        /* ============================================ */
+        
+        header {
+            background-color: rgba(139, 69, 19, 0.9);
+            border: 8px solid #654321;
+            border-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    #654321,
+                    #654321 4px,
+                    #8B4513 4px,
+                    #8B4513 8px
+                ) 8;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 
+                10px 10px 0 rgba(0,0,0,0.3),
+                inset 0 0 0 4px #A0522D;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #2d6a4f, #52b788);
+            border: 4px solid #1B5E20;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(45, 106, 79, 0.3);
+            overflow: hidden;
+        }
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .company-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            text-shadow: 
+                2px 2px 0 #1B5E20,
+                4px 4px 0 rgba(0,0,0,0.2);
+        }
+        .company-name span {
+            color: #81C784;
+            font-size: 12px;
+            text-shadow: 1px 1px 0 #1B5E20;
+        }
+
+        /* ============================================ */
+        /* NAVEGACIÓN IGUAL AL DE INDEX                */
+        /* ============================================ */
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background-color: #4CAF50;
+            color: white;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-bottom: 6px solid #2E7D32;
+            border-right: 6px solid #2E7D32;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            min-width: 100px;
+            transition: all 0.1s;
+            text-shadow: 2px 2px 0 #1B5E20;
+        }
+
+        .nav-button:hover {
+            background-color: #66BB6A;
+            transform: translate(2px, 2px);
+            border-bottom-width: 4px;
+            border-right-width: 4px;
+        }
+
+        .nav-button:active {
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .nav-button.active {
+            background-color: #2E7D32;
+            transform: translate(4px, 4px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .logout-btn {
+            background-color: #c62828;
+            border-bottom-color: #b71c1c;
+            border-right-color: #b71c1c;
+            text-shadow: 2px 2px 0 #b71c1c;
+        }
+        .logout-btn:hover {
+            background-color: #e53935;
+        }
+
+        .merchant-btn {
+            background-color: #00897B;
+            border-bottom-color: #00695C;
+            border-right-color: #00695C;
+            text-shadow: 2px 2px 0 #00695C;
+        }
+        .merchant-btn:hover {
+            background-color: #26A69A;
+        }
+
+        /* ============================================ */
+        /* CONTENIDO PRINCIPAL CON PALETA DE COLORES   */
+        /* ============================================ */
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: rgba(249, 224, 175, 0.95);
+            padding: 40px;
+            border: 6px solid #58ADA0;
+            color: #006A95;
+        }
+
+        .contact-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            color: #006A95;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0, 106, 149, 0.2);
+        }
+        .contact-title i { color: #FF5C00; }
+
+        .contact-subtitle {
+            font-size: 18px;
+            color: #58ADA0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-form { display: flex; flex-direction: column; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label {
+            font-size: 18px;
+            color: #006A95;
+            font-weight: bold;
+        }
+        .form-group label i { color: #FF5C00; width: 24px; }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 14px 16px;
+            background: #FFFFFF;
+            border: 4px solid #58ADA0;
+            border-radius: 8px;
+            font-size: 18px;
+            font-family: 'VT323', monospace;
+            color: #006A95;
+            outline: none;
+            transition: 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #FF5C00;
+            box-shadow: 0 0 30px rgba(255, 92, 0, 0.15);
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #FF1400, #FF5C00);
+            color: #F9E0AF;
+            padding: 16px;
+            border: 4px solid #FF5C00;
+            border-radius: 12px;
+            font-size: 22px;
+            font-family: 'VT323', monospace;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 10px;
+            text-shadow: 2px 2px 0 #CC0000;
+        }
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(255, 20, 0, 0.3);
+        }
+
+        .info-card {
+            background: rgba(249, 224, 175, 0.95);
+            padding: 40px;
+            border: 6px solid #58ADA0;
+            color: #006A95;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 18px;
+            color: #006A95;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .info-card h2 i { color: #FF5C00; }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 106, 149, 0.05);
+            border: 4px solid #58ADA0;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .info-item:hover {
+            background: rgba(0, 106, 149, 0.1);
+            border-color: #FF5C00;
+            transform: translateX(5px);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF1400, #FF5C00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #F9E0AF;
+            border: 3px solid #F9E0AF;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .info-text h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #006A95;
+            margin-bottom: 5px;
+        }
+        .info-text p { font-size: 20px; color: #58ADA0; }
+        .info-text .sub { font-size: 16px; color: #006A95; opacity: 0.7; }
+        .info-text a {
+            color: #FF5C00;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .info-text a:hover {
+            color: #FF1400;
+            text-shadow: 0 0 20px rgba(255, 20, 0, 0.2);
+        }
+
+        /* ============================================ */
+        /* REDES SOCIALES MEJORADAS                    */
+        /* ============================================ */
+        
+        .social-section {
+            background: rgba(0, 106, 149, 0.05);
+            border: 4px solid #58ADA0;
+            border-radius: 8px;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        .social-section h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: #006A95;
+            margin-bottom: 20px;
+        }
+        .social-section h3 i { color: #FF5C00; }
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border: 3px solid transparent;
+            border-radius: 12px;
+        }
+        .social-link:hover {
+            transform: translateY(-5px);
+            border-color: #FF5C00;
+            background: rgba(255, 92, 0, 0.1);
+            box-shadow: 0 0 30px rgba(255, 92, 0, 0.15);
+        }
+        .social-link .social-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 4px solid #58ADA0;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            color: #006A95;
+        }
+        .social-link:hover .social-icon {
+            border-color: #FF5C00;
+            box-shadow: 0 0 40px rgba(255, 92, 0, 0.2);
+            background: #F9E0AF;
+        }
+        .social-link .social-label {
+            font-size: 14px;
+            color: #58ADA0;
+            font-family: 'VT323', monospace;
+            font-weight: bold;
+        }
+        .social-link:hover .social-label {
+            color: #FF1400;
+        }
+        /* Colores específicos para cada red */
+        .social-link.youtube .social-icon { border-color: #FF1400; color: #FF1400; }
+        .social-link.youtube:hover .social-icon { box-shadow: 0 0 40px rgba(255, 20, 0, 0.3); background: rgba(255, 20, 0, 0.1); }
+        .social-link.x .social-icon { border-color: #006A95; color: #006A95; }
+        .social-link.x:hover .social-icon { box-shadow: 0 0 40px rgba(0, 106, 149, 0.3); background: rgba(0, 106, 149, 0.05); }
+        .social-link.facebook .social-icon { border-color: #1877f2; color: #1877f2; }
+        .social-link.facebook:hover .social-icon { box-shadow: 0 0 40px rgba(24, 119, 242, 0.3); background: rgba(24, 119, 242, 0.1); }
+        .social-link.instagram .social-icon { border-color: #e4405f; color: #e4405f; }
+        .social-link.instagram:hover .social-icon { box-shadow: 0 0 40px rgba(228, 64, 95, 0.3); background: rgba(228, 64, 95, 0.1); }
+
+        .horario {
+            background: rgba(0, 106, 149, 0.05);
+            padding: 20px;
+            border: 4px solid #58ADA0;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .horario h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #006A95;
+            margin-bottom: 10px;
+        }
+        .horario h4 i { color: #FF5C00; }
+        .horario p { font-size: 18px; color: #58ADA0; }
+        .horario p:last-child { font-size: 16px; color: #006A95; opacity: 0.7; }
+
+        .flash-message {
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 18px;
+            text-align: center;
+            border: 4px solid;
+            border-radius: 8px;
+        }
+        .flash-message.success {
+            background: rgba(88, 173, 160, 0.1);
+            color: #58ADA0;
+            border-color: #58ADA0;
+        }
+        .flash-message.error {
+            background: rgba(255, 20, 0, 0.1);
+            color: #FF1400;
+            border-color: #FF1400;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #F9E0AF;
+            margin-top: 60px;
+            background: rgba(0, 106, 149, 0.95);
+            border: 6px solid #FF5C00;
+            box-shadow: 0 0 30px rgba(255, 92, 0, 0.1);
+        }
+        footer p {
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+        footer a {
+            color: #F9E0AF;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        footer a:hover {
+            color: #FF5C00;
+            text-shadow: 0 0 20px rgba(255, 92, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 20px; }
+            .company-name { font-size: 16px; }
+            .contact-container { grid-template-columns: 1fr; }
+            .info-item { flex-direction: column; text-align: center; }
+            .info-text p { font-size: 18px; }
+            .social-grid { gap: 15px; }
+            .social-link .social-icon { width: 50px; height: 50px; font-size: 22px; }
+        }
+        @media (max-width: 480px) {
+            .nav-button { min-width: 80px; font-size: 16px; padding: 8px 15px; }
+            .contact-title { font-size: 20px; }
+            .contact-card { padding: 25px; }
+            .info-card { padding: 25px; }
+            .social-grid { gap: 10px; }
+            .social-link { padding: 8px 10px; }
+            .social-link .social-icon { width: 45px; height: 45px; font-size: 18px; }
+            .social-link .social-label { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="world-bg"></div>
+    <div class="container">
+        <!-- ============================================ -->
+        <!-- HEADER IDÉNTICO AL DE INDEX                  -->
+        <!-- ============================================ -->
+        <header>
+            <div class="logo-container">
+                <div class="logo-img">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TCE Logo">
+                </div>
+                <div class="company-name">T.C.E <span>· TITANS OF THE CODING ELITE</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/" class="nav-button">Inicio</a></li>
+                    <li><a href="/about" class="nav-button">Sobre</a></li>
+                    <li><a href="/negocios" class="nav-button">Negocios</a></li>
+                    <li><a href="/contacto" class="nav-button active">Contacto</a></li>
+                    {% if session.logged_in %}
+                        <li><a href="/logout" class="nav-button logout-btn">Salir</a></li>
+                        {% if session.is_merchant %}
+                            <li><a href="/merchant/dashboard" class="nav-button merchant-btn">Mi Tienda</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li><a href="/register" class="nav-button">Registro</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <div class="contact-container">
+            <div class="contact-card">
+                <h1 class="contact-title"><i class="fas fa-envelope"></i> Contáctanos</h1>
+                <p class="contact-subtitle">Déjanos tu mensaje y te responderemos pronto</p>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="/contacto" class="contact-form">
+                    <div class="form-group">
+                        <label for="nombre"><i class="fas fa-user"></i> Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="titan@tce.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono"><i class="fas fa-phone"></i> Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="+52 55 1234 5678">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="asunto"><i class="fas fa-tag"></i> Asunto</label>
+                        <select id="asunto" name="asunto">
+                            <option value="consulta">Consulta general</option>
+                            <option value="soporte">Soporte técnico</option>
+                            <option value="comerciante">Quiero ser comerciante</option>
+                            <option value="queja">Queja o sugerencia</option>
+                            <option value="otros">Otros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensaje"><i class="fas fa-comment"></i> Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Enviar mensaje
+                    </button>
+                </form>
+            </div>
+
+            <div class="info-card">
+                <h2><i class="fas fa-phone"></i> Información de contacto</h2>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <div class="info-text">
+                        <h3>TELÉFONO</h3>
+                        <p>+52 55 1234 5678</p>
+                        <span class="sub">Lun-Vie 9:00 - 18:00</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-text">
+                        <h3>EMAIL</h3>
+                        <p><a href="mailto:titanscodeelite@gmail.com">titanscodeelite@gmail.com</a></p>
+                        <span class="sub">Respuesta en 24 horas</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <h3>DIRECCIÓN</h3>
+                        <p>Digital Hub 404</p>
+                        <span class="sub">Ciudad del Código, CDMX</span>
+                    </div>
+                </div>
+
+                <!-- REDES SOCIALES - AHORA VISIBLE Y CON ESTILO -->
+                <div class="social-section">
+                    <h3><i class="fas fa-share-alt"></i> SÍGUENOS</h3>
+                    <div class="social-grid">
+                        <!-- YouTube -->
+                        <a href="https://www.youtube.com/channel/UCUuMsfJFCZiAnCaZVXyJKAA" target="_blank" class="social-link youtube">
+                            <div class="social-icon"><i class="fab fa-youtube"></i></div>
+                            <span class="social-label">YouTube</span>
+                        </a>
+                        <!-- X (Twitter) -->
+                        <a href="https://x.com/tc_elitepham" target="_blank" class="social-link x">
+                            <div class="social-icon"><i class="fa-brands fa-x-twitter"></i></div>
+                            <span class="social-label">X</span>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://facebook.com/profile.php?id=61590794528689" target="_blank" class="social-link facebook">
+                            <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+                            <span class="social-label">Facebook</span>
+                        </a>
+                        <!-- Instagram -->
+                        <a href="https://instagram.com/titanscodeelite" target="_blank" class="social-link instagram">
+                            <div class="social-icon"><i class="fab fa-instagram"></i></div>
+                            <span class="social-label">Instagram</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="horario">
+                    <h4><i class="fas fa-clock"></i> HORARIO DE ATENCIÓN</h4>
+                    <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+                    <p>Sábados: 10:00 AM - 2:00 PM</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>⚡ T.C.E · Contacto ⚡</p>
+            <p style="font-size:14px;opacity:0.8;margin-top:5px;">
+                📧 <a href="mailto:titanscodeelite@gmail.com">titanscodeelite@gmail.com</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

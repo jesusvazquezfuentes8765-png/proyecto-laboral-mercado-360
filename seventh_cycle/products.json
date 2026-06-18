@@ -1,0 +1,42 @@
+{
+  "prod1": {
+    "name": "Pan de Masa Madre",
+    "price": 85.0,
+    "description": "Pan artesanal con fermentación natural",
+    "category": "alimentos",
+    "icon": "🍞",
+    "merchant_email": "demo@mercado.com",
+    "store_name": "Tienda Demo",
+    "created_at": "2026-06-17T19:29:59.166061"
+  },
+  "prod2": {
+    "name": "Café Orgánico",
+    "price": 150.0,
+    "description": "Café de especialidad 100% orgánico",
+    "category": "alimentos",
+    "icon": "☕",
+    "merchant_email": "demo@mercado.com",
+    "store_name": "Tienda Demo",
+    "created_at": "2026-06-17T19:29:59.166075"
+  },
+  "prod3": {
+    "name": "Bolso Tejido",
+    "price": 220.0,
+    "description": "Bolso artesanal hecho a mano",
+    "category": "moda",
+    "icon": "👜",
+    "merchant_email": "demo@mercado.com",
+    "store_name": "Tienda Demo",
+    "created_at": "2026-06-17T19:29:59.166080"
+  },
+  "785e71c8": {
+    "name": "PAN DE MASA MADRE \"BIMBO\"",
+    "price": 139.0,
+    "description": "Pan de masa madre casero elaborado por BIMBO",
+    "category": "alimentos",
+    "icon": "🍞",
+    "merchant_email": "max@gmail.com",
+    "store_name": "CREMERIA OLIMPUS",
+    "created_at": "2026-06-17T20:18:40.476689"
+  }
+}
